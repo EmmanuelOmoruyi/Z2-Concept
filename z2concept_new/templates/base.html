@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Z2 Concept | Kefee Home Productions{% endblock %}</title>
+  <meta name="description" content="Z2 Concept and Kefee Home Productions - Professional photography and video production for weddings, events, fashion, corporate and more." />
+  <meta name="keywords" content="Z2 Concept, Z2Concept, Kefee Home Productions, KefeeHome, photography, videography, events, wedding photography" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body data-logged-in="{{ 'true' if current_user else 'false' }}">
+
+  <nav class="nav" id="nav">
+    <a class="nav__logo" href="/">
+      <span class="nav__logo-z">Z2</span>
+      <span class="nav__logo-concept">CONCEPT</span>
+      <span class="nav__logo-div">x</span>
+      <span class="nav__logo-kefee">KEFEE HOME</span>
+    </a>
+
+    <button class="nav__burger" id="navBurger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="nav__menu" id="navMenu">
+      <div class="nav__links">
+        <a class="nav__item {% if active=='home' %}active{% endif %}" href="/">HOME</a>
+        <a class="nav__item {% if active=='gallery' %}active{% endif %}" href="/gallery">GALLERY</a>
+<a class="nav__item {% if active=='booking' %}active{% endif %}" href="/booking">BOOKING</a>        <a class="nav__item {% if active=='contact' %}active{% endif %}" href="/contact">CONTACT</a>
+      </div>
+      <div class="nav__auth">
+        {% if current_user %}
+          <span class="nav__greeting">Hey, {{ current_user['name'].split()[0] }}</span>
+          <a class="nav__authlink" href="/logout">LOGOUT</a>
+        {% else %}
+          <a class="nav__authlink" href="/login">LOGIN</a>
+          <a class="nav__authlink nav__authlink--outline" href="/signup">SIGN UP</a>
+        {% endif %}
+        <a class="nav__booknow" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">BOOK NOW</a>
+      </div>
+    </div>
+  </nav>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-wrap">
+        {% for category, message in messages %}
+          <div class="flash flash--{{ category }}">
+            {{ message }}
+            <button onclick="this.parentElement.remove()">x</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+
+  <footer class="footer">
+    <div class="footer__brand">
+      <span class="footer__name">Z2 CONCEPT x KEFEE HOME PRODUCTIONS</span>
+      <span class="footer__copy">&copy; 2025 All rights reserved.</span>
+    </div>
+    <nav class="footer__nav">
+      <a href="/">Home</a>
+      <a href="/gallery">Gallery</a>
+      <a href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">Booking</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+      <a href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">Book</a>
+    </nav>
+    <span class="footer__tag">Your Feature Is Today.</span>
+  </footer>
+
+  <script src="/static/js/main.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

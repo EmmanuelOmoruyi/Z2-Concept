@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login – Z2 Concept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #E87722; --orange-light: #FF9A45;
+      --black: #0A0A0A; --black-2: #111; --black-3: #1A1A1A;
+      --white: #F5F5F0;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-cond: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    /* NAV */
+    .nav {
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(232,119,34,0.15);
+      background: var(--black-2);
+    }
+    .nav__logo { font-family: var(--font-display); font-size: 1.8rem; color: var(--orange); text-decoration: none; }
+    .nav__back { font-family: var(--font-cond); font-size: 0.8rem; letter-spacing: 0.12em; color: rgba(245,245,240,0.4); text-decoration: none; transition: color 0.2s; }
+    .nav__back:hover { color: var(--orange); }
+
+    /* LAYOUT */
+    .page { flex: 1; display: flex; align-items: center; justify-content: center; padding: 48px 24px; }
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: var(--black-2);
+      border: 1px solid rgba(232,119,34,0.18);
+      padding: 48px 40px;
+    }
+    .card__eyebrow {
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+    .card__title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 32px;
+    }
+
+    /* FLASH / ALERTS */
+    .flash-wrap { margin-bottom: 20px; }
+    .alert {
+      padding: 13px 16px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      border-left: 3px solid;
+    }
+    .alert--warning  { background: rgba(245,158,11,0.1); border-color: #f59e0b; color: #fbbf24; }
+    .alert--success  { background: rgba(34,197,94,0.1);  border-color: #22c55e; color: #4ade80; }
+    .alert--error    { background: rgba(239,68,68,0.1);  border-color: #ef4444; color: #f87171; }
+    .alert--info     { background: rgba(59,130,246,0.1); border-color: #3b82f6; color: #60a5fa; }
+
+    /* FORM */
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block;
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--orange);
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(232,119,34,0.22);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    input:focus { border-color: var(--orange); background: rgba(232,119,34,0.05); }
+    input::placeholder { color: rgba(245,245,240,0.22); }
+
+    .error-msg {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.35);
+      color: #f87171;
+      font-size: 0.86rem;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    /* SUBMIT */
+    .btn {
+      width: 100%;
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      color: var(--black);
+      background: var(--orange);
+      border: none;
+      padding: 16px;
+      cursor: pointer;
+      clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+    .btn:hover { background: var(--orange-light); }
+
+    /* FOOTER LINKS */
+    .card__footer {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 0.86rem;
+      color: rgba(245,245,240,0.4);
+    }
+    .card__footer a { color: var(--orange); text-decoration: none; }
+    .card__footer a:hover { color: var(--orange-light); }
+
+    /* RESEND FORM */
+    .resend-wrap {
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(232,119,34,0.06);
+      border: 1px solid rgba(232,119,34,0.2);
+      font-size: 0.84rem;
+      color: rgba(245,245,240,0.6);
+      text-align: center;
+    }
+    .resend-wrap button {
+      background: none;
+      border: none;
+      color: var(--orange);
+      font-family: var(--font-cond);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+    .resend-wrap button:hover { color: var(--orange-light); }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="nav__logo" href="/">Z2</a>
+    <a class="nav__back" href="/">← Back to site</a>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+      <p class="card__eyebrow">WELCOME BACK</p>
+      <h1 class="card__title">LOG IN</h1>
+
+      <!-- Flash messages passed via redirect -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-wrap">
+            {% for category, message in messages %}
+              <div class="alert alert--{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% if error %}
+        <div class="error-msg">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" value="{{ email }}" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Your password" required autocomplete="current-password" />
+        </div>
+        <button class="btn" type="submit">SIGN IN</button>
+      </form>
+
+      {% if show_resend %}
+      <div class="resend-wrap">
+        Didn't get the verification email?
+        <form method="POST" action="/resend-verification" style="display:inline;">
+          <input type="hidden" name="email" value="{{ resend_email }}" />
+          <button type="submit">Resend it</button>
+        </form>
+      </div>
+      {% endif %}
+
+      <div class="card__footer">
+        Don't have an account? <a href="/signup">Sign up</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
