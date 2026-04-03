@@ -205,6 +205,10 @@ def gallery():
 def about():
     return render_template("about.html", active="about")
 
+@app.route("/booking")
+def booking():
+    return render_template("booking.html", active="booking")
+
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     success = False
@@ -431,4 +435,3 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
-
