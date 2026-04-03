@@ -21,11 +21,13 @@ DATABASE   = "bookings.db"
 ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
 ADMIN_PASS = os.environ.get("ADMIN_PASS", "z2concept2025")
 GMAIL_USER = os.environ.get("GMAIL_USER", "akoviantechnologies@gmail.com")
-GMAIL_PASS = os.environ.get("GMAIL_PASS", "vmnjlavwvqyweocy")
+GMAIL_PASS = os.environ.get("GMAIL_PASS", "")
 NOTIFY_EMAIL = "kefeetxtu@gmail.com"
 BASE_URL   = os.environ.get("BASE_URL", "http://127.0.0.1:5000")
 
-UPLOAD_FOLDER = os.path.join("static", "uploads")
+CLOUDINARY_CLOUD = os.environ.get("CLOUDINARY_CLOUD", "dekw9tcyl")
+
+UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static", "uploads")
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
@@ -171,8 +173,24 @@ def inject_user():
         user = get_db().execute("SELECT * FROM users WHERE id=?", (session["user_id"],)).fetchone()
     return {"current_user": user}
 
+# Hardcoded Cloudinary photos — update public IDs here anytime
+CLOUDINARY_PHOTOS = [
+    {"id": "485148855_1106713074834658_1007018805585680720_n_yjeeyc", "caption": "Wedding"},
+    {"id": "656251185_1413698020802827_5479065206795647904_n_oqp6wo", "caption": "Event"},
+    {"id": "654800285_1413697914136171_6470243813399565788_n_gh6di4", "caption": "Event"},
+    {"id": "486315584_1106713061501326_5011477938717597358_n_yo5wqo", "caption": "Wedding"},
+    {"id": "655508905_1413697944136168_7858579123878504310_n_of0kha", "caption": "Event"},
+]
+
 def get_photos():
-    return get_db().execute("SELECT * FROM photos ORDER BY created_at DESC").fetchall()
+    photos = []
+    for p in CLOUDINARY_PHOTOS:
+        photos.append({
+            "filename": f"https://res.cloudinary.com/{CLOUDINARY_CLOUD}/image/upload/{p['id']}",
+            "caption": p["caption"],
+            "is_cloudinary": True
+        })
+    return photos
 
 # ── PAGES ──────────────────────────────────────────────────────────────────
 @app.route("/")
@@ -207,10 +225,6 @@ def contact():
             </div>""")
             success = True
     return render_template("contact.html", active="contact", success=success, error=error)
-
-@app.route("/booking")
-def booking():
-    return render_template("booking.html", active="booking")
 
 # ── AUTH ───────────────────────────────────────────────────────────────────
 @app.route("/signup", methods=["GET", "POST"])
@@ -417,3 +431,4 @@ with app.app_context():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), debug=False)
+
