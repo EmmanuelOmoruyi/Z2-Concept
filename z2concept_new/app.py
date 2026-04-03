@@ -227,6 +227,10 @@ def contact():
             success = True
     return render_template("contact.html", active="contact", success=success, error=error)
 
+   @app.route("/booking")
+def booking():
+    return render_template("booking.html", active="booking")
+
 # ── AUTH ───────────────────────────────────────────────────────────────────
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
