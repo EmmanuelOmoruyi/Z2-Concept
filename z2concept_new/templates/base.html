@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>{% block title %}Z2 Concept | Kefee Home Productions{% endblock %}</title>
   <meta name="description" content="Z2 Concept and Kefee Home Productions - Professional photography and video production for weddings, events, fashion, corporate and more." />
   <meta name="keywords" content="Z2 Concept, Z2Concept, Kefee Home Productions, KefeeHome, photography, videography, events, wedding photography" />
@@ -29,7 +29,9 @@
       <div class="nav__links">
         <a class="nav__item {% if active=='home' %}active{% endif %}" href="/">HOME</a>
         <a class="nav__item {% if active=='gallery' %}active{% endif %}" href="/gallery">GALLERY</a>
-<a class="nav__item {% if active=='booking' %}active{% endif %}" href="/booking">BOOKING</a>        <a class="nav__item {% if active=='contact' %}active{% endif %}" href="/contact">CONTACT</a>
+        <a class="nav__item {% if active=='booking' %}active{% endif %}" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">BOOKING</a>
+        <a class="nav__item {% if active=='about' %}active{% endif %}" href="/about">ABOUT</a>
+        <a class="nav__item {% if active=='contact' %}active{% endif %}" href="/contact">CONTACT</a>
       </div>
       <div class="nav__auth">
         {% if current_user %}
