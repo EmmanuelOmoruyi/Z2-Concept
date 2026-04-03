@@ -8,8 +8,36 @@ window.addEventListener('scroll', () => {
 const burger = document.getElementById('navBurger');
 const menu   = document.getElementById('navMenu');
 if (burger && menu) {
-  burger.addEventListener('click', () => menu.classList.toggle('open'));
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+  burger.addEventListener('click', () => {
+    const open = menu.classList.toggle('open');
+    // Animate burger to X
+    const spans = burger.querySelectorAll('span');
+    if (open) {
+      spans[0].style.cssText = 'transform:rotate(45deg) translate(5px,5px)';
+      spans[1].style.cssText = 'opacity:0';
+      spans[2].style.cssText = 'transform:rotate(-45deg) translate(5px,-5px)';
+      document.body.style.overflow = 'hidden';
+    } else {
+      spans.forEach(s => s.style.cssText = '');
+      document.body.style.overflow = '';
+    }
+  });
+  // Close on link click
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      menu.classList.remove('open');
+      burger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+      document.body.style.overflow = '';
+    });
+  });
+  // Close on outside tap
+  document.addEventListener('click', (e) => {
+    if (menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) {
+      menu.classList.remove('open');
+      burger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+      document.body.style.overflow = '';
+    }
+  });
 }
 
 // CAROUSEL
