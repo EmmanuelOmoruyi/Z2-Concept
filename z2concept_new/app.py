@@ -176,7 +176,6 @@ def inject_user():
 # Hardcoded Cloudinary photos — update public IDs here anytime
 CLOUDINARY_PHOTOS = [
     {"id": "485148855_1106713074834658_1007018805585680720_n_yjeeyc", "caption": "Wedding"},
-    {"id": "485410247_1106713314834634_1020997389437896831_n_lws3b1", "caption": "Wedding"},
     {"id": "656251185_1413698020802827_5479065206795647904_n_oqp6wo", "caption": "Event"},
     {"id": "654800285_1413697914136171_6470243813399565788_n_gh6di4", "caption": "Event"},
     {"id": "486315584_1106713061501326_5011477938717597358_n_yo5wqo", "caption": "Wedding"},
@@ -226,10 +225,6 @@ def contact():
             </div>""")
             success = True
     return render_template("contact.html", active="contact", success=success, error=error)
-
-   @app.route("/booking")
-def booking():
-    return render_template("booking.html", active="booking")
 
 # ── AUTH ───────────────────────────────────────────────────────────────────
 @app.route("/signup", methods=["GET", "POST"])
