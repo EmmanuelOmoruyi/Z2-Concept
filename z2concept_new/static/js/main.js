@@ -76,7 +76,7 @@ function openLightbox(filename, caption) {
   const img = document.getElementById('lightboxImg');
   const cap = document.getElementById('lightboxCap');
   if (!lb) return;
-  img.src = '/static/uploads/' + filename;
+  img.src = filename.startsWith('http') ? filename : '/static/uploads/' + filename;
   img.alt = caption || 'Z2 Concept';
   cap.textContent = caption || '';
   lb.classList.add('open');
@@ -146,3 +146,4 @@ document.querySelectorAll('.gallery-section, .about-teaser, .book-cta, .ticker, 
   el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
   observer.observe(el);
 });
+
