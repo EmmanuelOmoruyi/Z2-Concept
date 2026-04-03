@@ -15,7 +15,7 @@
     {% for i in range(slots) %}
       {% if photos and i < photos|length %}
       <div class="photo-grid__item" onclick="openLightbox('{{ photos[i]['filename'] }}','{{ photos[i]['caption'] or '' }}')">
-        <img src="/static/uploads/{{ photos[i]['filename'] }}" alt="{{ photos[i]['caption'] or 'Z2 Concept' }}" loading="lazy" />
+        <img src="{{ photos[i]['filename'] }}" alt="{{ photos[i]['caption'] or 'Z2 Concept' }}" loading="lazy" />
         {% if photos[i]['caption'] %}<div class="photo-grid__label"><span>{{ photos[i]['caption'] }}</span></div>{% endif %}
       </div>
       {% else %}
@@ -44,3 +44,4 @@
 </div>
 
 {% endblock %}
+
