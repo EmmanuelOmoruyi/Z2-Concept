@@ -20,7 +20,7 @@ body { background: var(--black); color: var(--white); font-family: var(--font-bo
 
 /* ── NAV ── */
 .nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   height: var(--nav-h);
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 48px;
@@ -415,15 +415,18 @@ body { background: var(--black); color: var(--white); font-family: var(--font-bo
   .nav__menu {
     display: none;
     position: fixed;
-    inset: 64px 0 0 0;
-    background: rgba(10,10,10,0.99);
-    backdrop-filter: blur(20px);
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #0a0a0a;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 0;
-    z-index: 100;
+    z-index: 999;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .nav__menu.open { display: flex; }
   .nav__links {
