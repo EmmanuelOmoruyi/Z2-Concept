@@ -11,22 +11,27 @@
 
 <section class="section">
   {% set slots = [photos|length, 6]|max %}
-  <div class="photo-grid">
-    {% for i in range(slots) %}
-      {% if photos and i < photos|length %}
-      <div class="photo-grid__item" onclick="openLightbox('{{ photos[i]['filename'] }}','{{ photos[i]['caption'] or '' }}')">
-        <img src="{{ photos[i]['filename'] }}" alt="{{ photos[i]['caption'] or 'Z2 Concept' }}" loading="lazy" />
-        {% if photos[i]['caption'] %}<div class="photo-grid__label"><span>{{ photos[i]['caption'] }}</span></div>{% endif %}
-      </div>
-      {% else %}
-      <div class="photo-grid__item photo-grid__item--placeholder">
-        <div class="placeholder-inner">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>PHOTO {{ i + 1 }}</span>
+  <div class="photo-carousel" id="pcGallery">
+    <div class="photo-carousel__track" id="pctGallery">
+      {% for i in range(slots) %}
+        {% if photos and i < photos|length %}
+        <div class="photo-carousel__slide" onclick="openLightbox('{{ photos[i]['filename'] }}','{{ photos[i]['caption'] or '' }}')">
+          <img src="{{ photos[i]['filename'] }}" alt="{{ photos[i]['caption'] or 'Z2 Concept' }}" loading="lazy" />
+          {% if photos[i]['caption'] %}<div class="photo-carousel__label"><span>{{ photos[i]['caption'] }}</span></div>{% endif %}
         </div>
-      </div>
-      {% endif %}
-    {% endfor %}
+        {% else %}
+        <div class="photo-carousel__slide photo-carousel__slide--placeholder">
+          <div class="placeholder-inner">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>PHOTO {{ i + 1 }}</span>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctGallery">&#8592;</button>
+    <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctGallery">&#8594;</button>
+    <div class="photo-carousel__dots" id="pcdGallery"></div>
   </div>
 
   <div class="gallery-footer">
@@ -44,4 +49,3 @@
 </div>
 
 {% endblock %}
-
