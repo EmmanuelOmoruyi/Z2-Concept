@@ -175,3 +175,67 @@ document.querySelectorAll('.gallery-section, .about-teaser, .book-cta, .ticker, 
   observer.observe(el);
 });
 
+// -- PHOTO CAROUSEL --
+function initPhotoCarousel(trackId, dotsId) {
+  const track = document.getElementById(trackId);
+  const dotsWrap = document.getElementById(dotsId);
+  if (!track) return;
+
+  const slides = Array.from(track.querySelectorAll('.photo-carousel__slide'));
+  const total = slides.length;
+  let current = 0;
+
+  // Build dots
+  const dots = [];
+  if (dotsWrap) {
+    slides.forEach((_, i) => {
+      const d = document.createElement('button');
+      d.className = 'photo-carousel__dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(d);
+      dots.push(d);
+    });
+  }
+
+  function visibleCount() {
+    if (window.innerWidth <= 600) return 1;
+    if (window.innerWidth <= 900) return 2;
+    return 3;
+  }
+
+  function goTo(idx) {
+    const max = Math.max(0, total - visibleCount());
+    current = Math.max(0, Math.min(idx, max));
+    const slideW = slides[0] ? slides[0].offsetWidth + 16 : 0;
+    track.style.transform = `translateX(-${current * slideW}px)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  // Wire buttons
+  const container = track.closest('.photo-carousel');
+  container.querySelector('.photo-carousel__btn--prev')?.addEventListener('click', () => goTo(current - 1));
+  container.querySelector('.photo-carousel__btn--next')?.addEventListener('click', () => goTo(current + 1));
+
+  // Auto-play
+  let auto = setInterval(() => goTo(current + 1 > total - visibleCount() ? 0 : current + 1), 4000);
+  container.addEventListener('mouseenter', () => clearInterval(auto));
+  container.addEventListener('mouseleave', () => {
+    clearInterval(auto);
+    auto = setInterval(() => goTo(current + 1 > total - visibleCount() ? 0 : current + 1), 4000);
+  });
+
+  // Touch swipe
+  let tx = 0;
+  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const d = tx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 50) d > 0 ? goTo(current + 1) : goTo(current - 1);
+  }, { passive: true });
+
+  window.addEventListener('resize', () => goTo(current));
+  goTo(0);
+}
+
+// Init all photo carousels on page
+initPhotoCarousel('pctHome', 'pcdHome');
+initPhotoCarousel('pctGallery', 'pcdGallery');
