@@ -47,22 +47,27 @@
     <h2 class="section__title">GALLERY</h2>
   </div>
 
-  <div class="photo-grid">
-    {% for i in range(6) %}
-      {% if photos and i < photos|length %}
-      <div class="photo-grid__item" onclick="openLightbox('{{ photos[i]['filename'] }}','{{ photos[i]['caption'] or '' }}')">
-        <img src="{{ photos[i]['filename'] }}" alt="{{ photos[i]['caption'] or 'Z2 Concept' }}" loading="lazy" />
-        {% if photos[i]['caption'] %}<div class="photo-grid__label"><span>{{ photos[i]['caption'] }}</span></div>{% endif %}
-      </div>
-      {% else %}
-      <div class="photo-grid__item photo-grid__item--placeholder">
-        <div class="placeholder-inner">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>PHOTO {{ i + 1 }}</span>
+  <div class="photo-carousel" id="pcHome">
+    <div class="photo-carousel__track" id="pctHome">
+      {% for i in range(6) %}
+        {% if photos and i < photos|length %}
+        <div class="photo-carousel__slide" onclick="openLightbox('{{ photos[i]['filename'] }}','{{ photos[i]['caption'] or '' }}')">
+          <img src="{{ photos[i]['filename'] }}" alt="{{ photos[i]['caption'] or 'Z2 Concept' }}" loading="lazy" />
+          {% if photos[i]['caption'] %}<div class="photo-carousel__label"><span>{{ photos[i]['caption'] }}</span></div>{% endif %}
         </div>
-      </div>
-      {% endif %}
-    {% endfor %}
+        {% else %}
+        <div class="photo-carousel__slide photo-carousel__slide--placeholder">
+          <div class="placeholder-inner">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>PHOTO {{ i + 1 }}</span>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctHome">&#8592;</button>
+    <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctHome">&#8594;</button>
+    <div class="photo-carousel__dots" id="pcdHome"></div>
   </div>
 
   <div class="gallery-footer">
@@ -92,25 +97,48 @@
       <div class="carousel__slide">
         <div class="video-card">
           <div class="video-card__frame">
-            <iframe src="https://www.youtube.com/embed/LMBjD2tXzNA" title="Z2 Concept Video" frameborder="0"
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Z2 Concept Video" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
           <p class="video-card__label">YouTube - Session Reel</p>
         </div>
       </div>
 
-             <!-- REPLACE VIDEO_ID_1 with your YouTube video ID -->
+      <!-- REPLACE YOUR_PAGE and VIDEO_ID_2 with your Facebook page and video ID -->
       <div class="carousel__slide">
         <div class="video-card">
           <div class="video-card__frame">
-            <iframe src="https://www.youtube.com/embed/VIDEO-id" title="Z2 Concept Video" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FYOUR_PAGE%2Fvideos%2FVIDEO_ID_2%2F&show_text=false"
+              title="Z2 Concept Facebook Video" frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
           </div>
-          <p class="video-card__label">YouTube - Session Reel</p>
+          <p class="video-card__label">Facebook - Event Coverage</p>
         </div>
       </div>
-      
-      
+
+      <!-- REPLACE VIDEO_ID_3 -->
+      <div class="carousel__slide">
+        <div class="video-card">
+          <div class="video-card__frame">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Z2 Concept Video" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="video-card__label">YouTube - Wedding Film</p>
+        </div>
+      </div>
+
+      <!-- REPLACE VIDEO_ID_4 -->
+      <div class="carousel__slide">
+        <div class="video-card">
+          <div class="video-card__frame">
+            <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2FYOUR_PAGE%2Fvideos%2FVIDEO_ID_4%2F&show_text=false"
+              title="Z2 Concept Facebook Video" frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <p class="video-card__label">Facebook - Birthday Highlights</p>
+        </div>
+      </div>
+
     </div>
     <button class="carousel__btn carousel__btn--prev" data-target="videoTrack">&#8592;</button>
     <button class="carousel__btn carousel__btn--next" data-target="videoTrack">&#8594;</button>
@@ -148,3 +176,4 @@
 </section>
 
 {% endblock %}
+
