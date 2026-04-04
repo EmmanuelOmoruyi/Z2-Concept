@@ -7,35 +7,41 @@ window.addEventListener('scroll', () => {
 // MOBILE BURGER
 const burger = document.getElementById('navBurger');
 const menu   = document.getElementById('navMenu');
+
+function closeMenu() {
+  menu.classList.remove('open');
+  menu.style.display = '';
+  burger.querySelectorAll('span').forEach(s => s.style.cssText = '');
+  document.body.style.overflow = '';
+}
+
+function openMenu() {
+  menu.classList.add('open');
+  menu.style.display = 'flex';
+  const spans = burger.querySelectorAll('span');
+  spans[0].style.cssText = 'transform:rotate(45deg) translate(5px,5px)';
+  spans[1].style.cssText = 'opacity:0; transform:scaleX(0)';
+  spans[2].style.cssText = 'transform:rotate(-45deg) translate(5px,-5px)';
+  document.body.style.overflow = 'hidden';
+}
+
 if (burger && menu) {
-  burger.addEventListener('click', () => {
-    const open = menu.classList.toggle('open');
-    // Animate burger to X
-    const spans = burger.querySelectorAll('span');
-    if (open) {
-      spans[0].style.cssText = 'transform:rotate(45deg) translate(5px,5px)';
-      spans[1].style.cssText = 'opacity:0';
-      spans[2].style.cssText = 'transform:rotate(-45deg) translate(5px,-5px)';
-      document.body.style.overflow = 'hidden';
+  burger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (menu.classList.contains('open')) {
+      closeMenu();
     } else {
-      spans.forEach(s => s.style.cssText = '');
-      document.body.style.overflow = '';
+      openMenu();
     }
   });
-  // Close on link click
+
   menu.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => {
-      menu.classList.remove('open');
-      burger.querySelectorAll('span').forEach(s => s.style.cssText = '');
-      document.body.style.overflow = '';
-    });
+    a.addEventListener('click', () => closeMenu());
   });
-  // Close on outside tap
+
   document.addEventListener('click', (e) => {
     if (menu.classList.contains('open') && !menu.contains(e.target) && !burger.contains(e.target)) {
-      menu.classList.remove('open');
-      burger.querySelectorAll('span').forEach(s => s.style.cssText = '');
-      document.body.style.overflow = '';
+      closeMenu();
     }
   });
 }
