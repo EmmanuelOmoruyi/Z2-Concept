@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard – Z2 Concept</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600&family=Barlow+Condensed:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #E87722; --orange-light: #FF9A45;
+      --black: #0A0A0A; --black-2: #111; --black-3: #1A1A1A;
+      --white: #F5F5F0; --gray: #2A2A2A;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-cond: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--black); color: var(--white); font-family: var(--font-body); min-height: 100vh; }
+
+    /* NAV */
+    .anav {
+      background: var(--black-2);
+      border-bottom: 1px solid rgba(232,119,34,0.2);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .anav__logo { font-family: var(--font-display); font-size: 1.6rem; color: var(--orange); }
+    .anav__right { display: flex; align-items: center; gap: 20px; }
+    .anav__site { font-family: var(--font-cond); font-size: 0.8rem; letter-spacing: 0.1em; color: rgba(245,245,240,0.5); text-decoration: none; }
+    .anav__site:hover { color: var(--orange); }
+    .anav__logout { font-family: var(--font-cond); font-size: 0.8rem; letter-spacing: 0.1em; color: rgba(245,245,240,0.4); text-decoration: none; padding: 8px 16px; border: 1px solid rgba(245,245,240,0.15); transition: all 0.2s; }
+    .anav__logout:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* LAYOUT */
+    .main { padding: 36px 32px; max-width: 1300px; margin: 0 auto; }
+
+    /* STATS */
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 36px; }
+    .stat {
+      background: var(--black-2);
+      border: 1px solid rgba(232,119,34,0.15);
+      padding: 20px 24px;
+      border-top: 3px solid var(--orange);
+    }
+    .stat__num { font-family: var(--font-display); font-size: 2.8rem; color: var(--orange); line-height: 1; }
+    .stat__label { font-family: var(--font-cond); font-size: 0.72rem; letter-spacing: 0.14em; color: rgba(245,245,240,0.45); margin-top: 4px; }
+    .stat--pending  { border-top-color: #f59e0b; }
+    .stat--pending .stat__num { color: #f59e0b; }
+    .stat--confirmed { border-top-color: #3b82f6; }
+    .stat--confirmed .stat__num { color: #3b82f6; }
+    .stat--completed { border-top-color: #22c55e; }
+    .stat--completed .stat__num { color: #22c55e; }
+    .stat--cancelled { border-top-color: #ef4444; }
+    .stat--cancelled .stat__num { color: #ef4444; }
+
+    /* FILTERS */
+    .filters {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 8px 18px;
+      border: 1px solid rgba(245,245,240,0.15);
+      background: none;
+      color: rgba(245,245,240,0.5);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: rgba(232,119,34,0.06);
+    }
+    .search-form { display: flex; gap: 10px; margin-left: auto; }
+    .search-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(232,119,34,0.2);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      outline: none;
+      width: 220px;
+    }
+    .search-input:focus { border-color: var(--orange); }
+    .search-btn {
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      background: var(--orange);
+      color: var(--black);
+      border: none;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .search-btn:hover { background: var(--orange-light); }
+
+    /* TABLE */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 900px; }
+    thead tr { border-bottom: 2px solid var(--orange); }
+    th {
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--orange);
+      padding: 12px 16px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    tbody tr {
+      border-bottom: 1px solid rgba(245,245,240,0.06);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: rgba(232,119,34,0.04); }
+    td { padding: 14px 16px; font-size: 0.88rem; vertical-align: middle; }
+
+    /* STATUS BADGE */
+    .badge {
+      display: inline-block;
+      font-family: var(--font-cond);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      text-transform: uppercase;
+    }
+    .badge--pending   { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+    .badge--confirmed { background: rgba(59,130,246,0.15); color: #3b82f6; border: 1px solid rgba(59,130,246,0.3); }
+    .badge--completed { background: rgba(34,197,94,0.15);  color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+    .badge--cancelled { background: rgba(239,68,68,0.15);  color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+    /* ACTION FORMS */
+    .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .status-select {
+      background: var(--black-3);
+      border: 1px solid rgba(232,119,34,0.2);
+      color: var(--white);
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      padding: 6px 10px;
+      cursor: pointer;
+      outline: none;
+    }
+    .status-select:focus { border-color: var(--orange); }
+    .btn-update {
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: var(--orange);
+      color: var(--black);
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-update:hover { background: var(--orange-light); }
+    .btn-delete {
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      background: rgba(239,68,68,0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239,68,68,0.3);
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-delete:hover { background: rgba(239,68,68,0.25); }
+
+    /* EMPTY STATE */
+    .empty {
+      text-align: center;
+      padding: 80px 20px;
+      color: rgba(245,245,240,0.25);
+    }
+    .empty__icon { font-size: 3rem; margin-bottom: 16px; }
+    .empty__text { font-family: var(--font-cond); font-size: 1rem; letter-spacing: 0.1em; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .main { padding: 24px 16px; }
+      .anav { padding: 0 16px; }
+      .search-form { margin-left: 0; width: 100%; }
+      .search-input { flex: 1; }
+    }
+  
+    /* PHOTO UPLOAD */
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--orange);
+      margin: 48px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(232,119,34,0.2);
+    }
+    .upload-form {
+      display: flex;
+      gap: 12px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+      padding: 24px;
+      background: var(--black-2);
+      border: 1px solid rgba(232,119,34,0.15);
+    }
+    .upload-group { display: flex; flex-direction: column; gap: 6px; }
+    .upload-group label {
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--orange);
+    }
+    .upload-group input[type="text"] {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(232,119,34,0.22);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      padding: 10px 14px;
+      outline: none;
+      width: 220px;
+    }
+    .upload-group input[type="file"] {
+      color: rgba(245,245,240,0.6);
+      font-size: 0.82rem;
+    }
+    .upload-btn {
+      font-family: var(--font-cond);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      background: var(--orange);
+      color: var(--black);
+      border: none;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: background 0.2s;
+      align-self: flex-end;
+    }
+    .upload-btn:hover { background: var(--orange-light); }
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .photo-thumb {
+      position: relative;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      background: var(--gray);
+      border: 1px solid rgba(232,119,34,0.1);
+    }
+    .photo-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .photo-thumb__caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.7);
+      padding: 6px 10px;
+      font-size: 0.75rem;
+      color: var(--white);
+      font-family: var(--font-cond);
+      letter-spacing: 0.06em;
+    }
+    .photo-thumb__del {
+      position: absolute;
+      top: 6px; right: 6px;
+      background: rgba(239,68,68,0.85);
+      color: white;
+      border: none;
+      width: 26px; height: 26px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .photo-thumb__del:hover { background: #ef4444; }
+    .no-photos {
+      color: rgba(245,245,240,0.25);
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      padding: 20px 0;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="anav">
+    <div class="anav__logo">Z2 CONCEPT · ADMIN</div>
+    <div class="anav__right">
+      <a href="/" class="anav__site">← View Site</a>
+      <a href="/admin/logout" class="anav__logout">LOGOUT</a>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- STATS -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat__num">{{ total }}</div>
+        <div class="stat__label">TOTAL BOOKINGS</div>
+      </div>
+      <div class="stat stat--pending">
+        <div class="stat__num">{{ count_map.get('pending', 0) }}</div>
+        <div class="stat__label">PENDING</div>
+      </div>
+      <div class="stat stat--confirmed">
+        <div class="stat__num">{{ count_map.get('confirmed', 0) }}</div>
+        <div class="stat__label">CONFIRMED</div>
+      </div>
+      <div class="stat stat--completed">
+        <div class="stat__num">{{ count_map.get('completed', 0) }}</div>
+        <div class="stat__label">COMPLETED</div>
+      </div>
+      <div class="stat stat--cancelled">
+        <div class="stat__num">{{ count_map.get('cancelled', 0) }}</div>
+        <div class="stat__label">CANCELLED</div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filters">
+      {% for f in [('all','ALL'), ('pending','PENDING'), ('confirmed','CONFIRMED'), ('completed','COMPLETED'), ('cancelled','CANCELLED')] %}
+      <a href="/admin?status={{ f[0] }}{% if search %}&q={{ search }}{% endif %}"
+         class="filter-btn {% if status_filter == f[0] %}active{% endif %}">
+        {{ f[1] }}
+      </a>
+      {% endfor %}
+
+      <form class="search-form" method="GET" action="/admin">
+        <input type="hidden" name="status" value="{{ status_filter }}" />
+        <input class="search-input" type="text" name="q" value="{{ search }}" placeholder="Search name, email, service…" />
+        <button class="search-btn" type="submit">SEARCH</button>
+      </form>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Service</th>
+            <th>Date / Time</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Received</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if bookings %}
+            {% for b in bookings %}
+            <tr>
+              <td style="color:rgba(245,245,240,0.35);font-size:0.8rem;">{{ b['id'] }}</td>
+              <td><strong>{{ b['name'] }}</strong></td>
+              <td>
+                <div>{{ b['email'] }}</div>
+                <div style="color:var(--orange);font-size:0.82rem;">{{ b['phone'] }}</div>
+              </td>
+              <td style="color:var(--orange);font-family:var(--font-cond);letter-spacing:0.06em;">{{ b['service'] }}</td>
+              <td>
+                <div>{{ b['event_date'] }}</div>
+                <div style="color:rgba(245,245,240,0.45);font-size:0.82rem;">{{ b['event_time'] }}</div>
+              </td>
+              <td style="max-width:200px;color:rgba(245,245,240,0.6);font-size:0.82rem;">
+                {{ b['message'][:80] + '…' if b['message'] and b['message']|length > 80 else (b['message'] or '—') }}
+              </td>
+              <td>
+                <span class="badge badge--{{ b['status'] }}">{{ b['status'] }}</span>
+              </td>
+              <td style="color:rgba(245,245,240,0.4);font-size:0.8rem;white-space:nowrap;">{{ b['created_at'][:16] }}</td>
+              <td>
+                <div class="actions">
+                  <form method="POST" action="/admin/booking/{{ b['id'] }}/status" style="display:flex;gap:6px;">
+                    <select class="status-select" name="status">
+                      {% for s in ['pending','confirmed','completed','cancelled'] %}
+                      <option value="{{ s }}" {% if b['status'] == s %}selected{% endif %}>{{ s }}</option>
+                      {% endfor %}
+                    </select>
+                    <button class="btn-update" type="submit">SAVE</button>
+                  </form>
+                  <form method="POST" action="/admin/booking/{{ b['id'] }}/delete"
+                        onsubmit="return confirm('Delete booking from {{ b['name'] }}?')">
+                    <button class="btn-delete" type="submit">DELETE</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="9">
+                <div class="empty">
+                  <div class="empty__icon">📭</div>
+                  <div class="empty__text">NO BOOKINGS FOUND</div>
+                </div>
+              </td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+
+    <!-- PHOTO MANAGEMENT -->
+    <div class="section-title">PHOTO GALLERY</div>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div style="padding:12px 16px;margin-bottom:12px;border-left:3px solid var(--orange);background:rgba(232,119,34,0.08);font-size:0.88rem;color:var(--white);">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <!-- Upload Form -->
+    <form class="upload-form" method="POST" action="/admin/photos/upload" enctype="multipart/form-data">
+      <div class="upload-group">
+        <label>Photo File (JPG, PNG, WEBP, GIF)</label>
+        <input type="file" name="photo" accept="image/*" required />
+      </div>
+      <div class="upload-group">
+        <label>Caption (optional)</label>
+        <input type="text" name="caption" placeholder="e.g. Wedding - June 2025" />
+      </div>
+      <button class="upload-btn" type="submit">UPLOAD PHOTO</button>
+    </form>
+
+    <!-- Photos Grid -->
+    {% set photos = db_photos %}
+    {% if photos %}
+    <div class="photos-grid">
+      {% for photo in photos %}
+      <div class="photo-thumb">
+        <img src="/static/uploads/{{ photo['filename'] }}" alt="{{ photo['caption'] or '' }}" />
+        {% if photo['caption'] %}
+        <div class="photo-thumb__caption">{{ photo['caption'] }}</div>
+        {% endif %}
+        <form method="POST" action="/admin/photos/{{ photo['id'] }}/delete"
+              onsubmit="return confirm('Delete this photo?')">
+          <button class="photo-thumb__del" type="submit" title="Delete">x</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="no-photos">NO PHOTOS UPLOADED YET</p>
+    {% endif %}
+
+  </main>
+</body>
+</html>

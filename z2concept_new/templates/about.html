@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}About Us | Z2 Concept | Kefee Home Productions{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="page-hero__inner">
+    <span class="section__label">OUR STORY</span>
+    <h1 class="page-hero__title">ABOUT<br/><em>US</em></h1>
+  </div>
+</section>
+
+<section class="section about-page">
+  <div class="about-page__inner">
+
+    <p class="about-page__lead">We don't just capture moments.<br/><strong>We build visual legacies.</strong></p>
+
+    <div class="about-page__cols">
+      <div class="about-page__col">
+        <h3 class="about-page__col-title">KEFEE HOME PRODUCTIONS</h3>
+        <p>Kefee Home Productions and its creative division, Z2 Concepts, specialise in professional photography and video production, delivering high-quality visuals across a wide range of projects. From weddings and events to fashion, corporate content, and branded media, the focus is always on capturing moments in a way that feels authentic, engaging, and visually striking.</p>
+        <p>With a strong balance of creativity and technical skill, each project is handled with attention to detail - from the initial idea through to the final production. The approach goes beyond simply taking photos or videos; it is about telling stories, building visual identity, and creating content that connects with people.</p>
+      </div>
+      <div class="about-page__col">
+        <h3 class="about-page__col-title">Z2 CONCEPTS</h3>
+        <p>Z2 Concepts adds a creative edge to the process, shaping ideas, directing content, and helping bring unique visions to life. Together, the brand delivers a complete visual experience designed to meet modern standards while keeping each project personal and impactful.</p>
+        <div class="about-page__quote">"Your Feature Is Today."</div>
+        <a class="cta-btn" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener" style="display:inline-flex;margin-top:32px;">
+          <span class="cta-btn__inner">BOOK A SESSION</span>
+          <span class="cta-btn__shine"></span>
+        </a>
+      </div>
+    </div>
+
+    <div class="about-page__services">
+      <h3 class="about-page__services-title">WHAT WE DO</h3>
+      <div class="services-grid">
+        {% for s in ['Events','Weddings','Birthdays','Funerals','Real Estate','Baby Showers','Graduations','Flyer Design','Logo Design','Website Design','Fashion & Corporate','Branded Media'] %}
+        <div class="service-item">
+          <span class="service-item__dot"></span>
+          <span>{{ s }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+{% block title %}Z2 Concept | Kefee Home Productions - Video & Photography{% endblock %}
+{% block content %}
+
+<!-- ░░ HERO ░░ -->
+<section class="hero" id="home">
+  <div class="hero__left">
+    <p class="hero__eyebrow">YOUR FEATURE IS TODAY</p>
+    <h1 class="hero__title">BOOK A<br/><em>VIDEO / PHOTO</em><br/>SESSION</h1>
+    <p class="hero__tagline">Events &middot; Weddings &middot; Birthdays &middot; Funerals &middot; Real Estate &middot; Baby Showers &middot; Graduations</p>
+  </div>
+  <div class="hero__right">
+    <div class="hero__slider" id="heroSlider">
+      {% for photo in photos %}
+      <div class="hero__slide {% if loop.first %}active{% endif %}">
+        <img src="{{ photo['filename'] }}" alt="{{ photo['caption'] or 'Z2 Concept' }}" />
+      </div>
+      {% endfor %}
+      <div class="hero__slider-dots" id="heroSliderDots"></div>
+    </div>
+    <a class="hero__book-btn" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+      BOOK A SESSION
+    </a>
+  </div>
+</section>
+
+<!-- ░░ TICKER ░░ -->
+<section class="ticker">
+  <div class="ticker__track">
+    <span>EVENTS</span><span class="dot">&#10022;</span>
+    <span>WEDDINGS</span><span class="dot">&#10022;</span>
+    <span>BIRTHDAYS</span><span class="dot">&#10022;</span>
+    <span>FUNERALS</span><span class="dot">&#10022;</span>
+    <span>REAL ESTATE</span><span class="dot">&#10022;</span>
+    <span>BABY SHOWERS</span><span class="dot">&#10022;</span>
+    <span>GRADUATIONS</span><span class="dot">&#10022;</span>
+    <span>WEB DESIGN</span><span class="dot">&#10022;</span>
+    <span>GRAPHICS</span><span class="dot">&#10022;</span>
+    <span>AI CONTENT</span><span class="dot">&#10022;</span>
+    <span>LOGO DESIGN</span><span class="dot">&#10022;</span>
+    <span>EVENTS</span><span class="dot">&#10022;</span>
+    <span>WEDDINGS</span><span class="dot">&#10022;</span>
+    <span>BIRTHDAYS</span><span class="dot">&#10022;</span>
+    <span>FUNERALS</span><span class="dot">&#10022;</span>
+    <span>REAL ESTATE</span><span class="dot">&#10022;</span>
+    <span>BABY SHOWERS</span><span class="dot">&#10022;</span>
+    <span>GRADUATIONS</span><span class="dot">&#10022;</span>
+    <span>WEB DESIGN</span><span class="dot">&#10022;</span>
+    <span>GRAPHICS</span><span class="dot">&#10022;</span>
+    <span>AI CONTENT</span><span class="dot">&#10022;</span>
+    <span>LOGO DESIGN</span><span class="dot">&#10022;</span>
+  </div>
+</section>
+
+<!-- ░░ SERVICES ░░ -->
+<section class="section services-section" id="services">
+  <div class="section__header">
+    <span class="section__label">WHAT WE DO</span>
+    <h2 class="section__title">OUR SERVICES</h2>
+  </div>
+  <div class="services-grid-full">
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <h3>PHOTOGRAPHY</h3>
+      <p>Professional shoots for weddings, events, portraits, real estate and more. Every frame composed with intention.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+      </div>
+      <h3>VIDEO PRODUCTION</h3>
+      <p>Cinematic event coverage, highlight reels, and full-length productions edited to a standard that speaks for itself.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <h3>WEB DEVELOPMENT</h3>
+      <p>Clean, fast, mobile-first websites built to represent your brand and convert visitors into clients.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+      </div>
+      <h3>GRAPHICS DESIGN</h3>
+      <p>Flyers, banners, social media graphics and brand visuals designed to stop the scroll and make an impact.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <h3>AI CONTENT CREATION</h3>
+      <p>Smart, AI-powered content strategy, copy, and visuals that keep your brand consistent and your audience engaged.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      </div>
+      <h3>LOGO DESIGN</h3>
+      <p>Distinctive logos and full brand identity packages that tell your story at a glance and last a lifetime.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>PHOTO & VIDEO EDITING</h3>
+      <p>Professional post-production — colour grading, retouching, and cuts that make your raw footage shine.</p>
+    </div>
+
+    <div class="service-card">
+      <div class="service-card__icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <h3>EVENT COVERAGE</h3>
+      <p>Full-day event documentation — birthdays, funerals, graduations, baby showers, corporate events and more.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ░░ GALLERY ░░ -->
+<section class="section gallery-section" id="gallery">
+  <div class="section__header">
+    <span class="section__label">OUR WORK</span>
+    <h2 class="section__title">GALLERY</h2>
+  </div>
+
+  <!-- Category Tabs -->
+  <div class="gallery-tabs" id="galleryTabs">
+    <button class="gallery-tab active" data-cat="all">ALL</button>
+    <button class="gallery-tab" data-cat="weddings">WEDDINGS</button>
+    <button class="gallery-tab" data-cat="birthdays">BIRTHDAYS</button>
+    <button class="gallery-tab" data-cat="headshots">HEADSHOTS</button>
+    <button class="gallery-tab" data-cat="graduations">GRADUATIONS</button>
+  </div>
+
+  <!-- Photo Carousel -->
+  <div class="photo-carousel" id="pcHome">
+    <div class="photo-carousel__track" id="pctHome">
+      {% for photo in photos %}
+      <div class="photo-carousel__slide" data-cat="{{ photo['caption']|lower if photo['caption'] else 'all' }}" onclick="openLightbox('{{ photo['filename'] }}','{{ photo['caption'] or '' }}')">
+        <img src="{{ photo['filename'] }}" alt="{{ photo['caption'] or 'Z2 Concept' }}" loading="lazy" />
+        {% if photo['caption'] %}<div class="photo-carousel__label"><span>{{ photo['caption'] }}</span></div>{% endif %}
+      </div>
+      {% endfor %}
+      <!-- Category placeholders shown when no real photos in that category -->
+      <div class="photo-carousel__slide photo-carousel__slide--placeholder" data-cat="weddings">
+        <div class="placeholder-inner"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>WEDDINGS</span></div>
+      </div>
+      <div class="photo-carousel__slide photo-carousel__slide--placeholder" data-cat="birthdays">
+        <div class="placeholder-inner"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>BIRTHDAYS</span></div>
+      </div>
+      <div class="photo-carousel__slide photo-carousel__slide--placeholder" data-cat="headshots">
+        <div class="placeholder-inner"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>HEADSHOTS</span></div>
+      </div>
+      <div class="photo-carousel__slide photo-carousel__slide--placeholder" data-cat="graduations">
+        <div class="placeholder-inner"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>GRADUATIONS</span></div>
+      </div>
+    </div>
+    <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctHome">&#8592;</button>
+    <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctHome">&#8594;</button>
+    <div class="photo-carousel__dots" id="pcdHome"></div>
+  </div>
+
+  <div class="gallery-footer">
+    <a class="fb-btn" href="https://www.facebook.com/profile.php?id=100064879260169&sk=photos_albums" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      VIEW MORE IMAGES ON FACEBOOK
+    </a>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox__close" onclick="closeLightbox()">&#10005;</button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+  <p class="lightbox__cap" id="lightboxCap"></p>
+</div>
+
+<!-- ░░ VIDEOS ░░ -->
+<section class="section videos-section" id="videos">
+  <div class="section__header">
+    <span class="section__label">WATCH US WORK</span>
+    <h2 class="section__title">VIDEOS</h2>
+  </div>
+  <div class="carousel">
+    <div class="carousel__track" id="videoTrack">
+      <div class="carousel__slide">
+        <div class="video-card">
+          <div class="video-card__frame">
+            <iframe src="https://www.youtube.com/embed/LMBjD2tXzNA" title="Z2 Concept Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="video-card__label">YouTube - Session Reel</p>
+        </div>
+      </div>
+      <div class="carousel__slide">
+        <div class="video-card">
+          <div class="video-card__frame">
+            <iframe src="https://www.youtube.com/embed/za9zCdzli6g" title="Z2 Concept Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <p class="video-card__label">YouTube - Wedding Film</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel__btn carousel__btn--prev" data-target="videoTrack">&#8592;</button>
+    <button class="carousel__btn carousel__btn--next" data-target="videoTrack">&#8594;</button>
+    <div class="carousel__dots" id="videoDots"></div>
+  </div>
+</section>
+
+<!-- ░░ ABOUT ░░ -->
+<section class="section about-section" id="about">
+  <div class="about-section__inner">
+    <div class="about-section__left">
+      <span class="section__label">WHO WE ARE</span>
+      <h2 class="about-section__title">STORIES TOLD.<br/><em>MOMENTS KEPT.</em></h2>
+      <p>Kefee Home Productions and its creative division, Z2 Concepts, specialise in professional photography and video production, delivering high-quality visuals across a wide range of projects. From weddings and events to fashion, corporate content, and branded media.</p>
+      <p>Z2 Concepts adds a creative edge to the process, shaping ideas, directing content, and helping bring unique visions to life. Together, the brand delivers a complete visual experience designed to meet modern standards while keeping each project personal and impactful.</p>
+      <div class="about-section__quote">"Your Feature Is Today."</div>
+    </div>
+    <div class="about-section__stats">
+      <div class="stat"><span class="stat__n">248+</span><span class="stat__l">FOLLOWERS</span></div>
+      <div class="stat"><span class="stat__n">100%</span><span class="stat__l">PASSION</span></div>
+      <div class="stat"><span class="stat__n">11+</span><span class="stat__l">SERVICES</span></div>
+      <div class="stat"><span class="stat__n">1</span><span class="stat__l">VISION</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ CONTACT ░░ -->
+<section class="section contact-section" id="contact">
+  <div class="section__header">
+    <span class="section__label">GET IN TOUCH</span>
+    <h2 class="section__title">CONTACT US</h2>
+  </div>
+
+  <!-- Map -->
+  <div class="map-wrap" style="margin-bottom:56px;">
+    <div class="map-address">
+      <div class="map-address__icon">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <div>
+        <p class="map-address__name">Kefee Home Productions</p>
+        <p class="map-address__line">27 Abhainn Glas</p>
+        <p class="map-address__line">Edgeworthstown, Longford</p>
+        <p class="map-address__line">N39 TV09, Ireland</p>
+        <a class="map-address__directions" href="https://www.google.com/maps/dir/?api=1&destination=27+Abhainn+Glas,+Edgeworthstown,+Longford,+N39+TV09,+Ireland" target="_blank" rel="noopener">
+          GET DIRECTIONS
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="map-embed">
+      <iframe src="https://maps.google.com/maps?q=27+Abhainn+Glas,+Edgeworthstown,+Longford,+N39+TV09,+Ireland&output=embed&z=15" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+
+  <!-- Contact grid -->
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3 class="contact-info__title">LET'S TALK</h3>
+      <p class="contact-info__sub">Have a project in mind? Reach out and we will get back to you fast.</p>
+      <div class="contact-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+        <div><span class="contact-item__label">PHONE / WHATSAPP</span><a class="contact-item__value" href="tel:+12249000540">+1 224 900 0540</a></div>
+      </div>
+      <div class="contact-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <div><span class="contact-item__label">EMAIL</span><a class="contact-item__value" href="mailto:kefeetxtu@gmail.com">kefeetxtu@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        <div><span class="contact-item__label">FACEBOOK</span><a class="contact-item__value" href="https://www.facebook.com/profile.php?id=100064879260169" target="_blank" rel="noopener">Kefee Home Productions</a></div>
+      </div>
+      <div class="contact-socials">
+        <a href="https://www.facebook.com/profile.php?id=100064879260169" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58 2.78 2.78 0 001.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75,15.02 15.5,12 9.75,8.98 9.75,15.02" fill="white"/></svg></a>
+        <a href="https://wa.me/12249000540" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.528 5.837L0 24l6.335-1.652A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.653-.51-5.17-1.4l-.371-.22-3.763.98.999-3.671-.243-.386A9.936 9.936 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></a>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <form method="POST" action="/contact">
+        {% if success %}<div class="form-success">Message sent! We will be in touch shortly.</div>{% endif %}
+        {% if error %}<div class="form-error">{{ error }}</div>{% endif %}
+        <div class="form-group"><label>Full Name</label><input type="text" name="name" placeholder="Your name" required /></div>
+        <div class="form-group"><label>Email Address</label><input type="email" name="email" placeholder="you@example.com" required /></div>
+        <div class="form-group"><label>Subject</label><input type="text" name="subject" placeholder="What is this about?" required /></div>
+        <div class="form-group"><label>Message</label><textarea name="message" rows="4" placeholder="Tell us about your project..." required></textarea></div>
+        <button class="cta-btn" type="submit" style="width:100%;border:none;cursor:pointer;">
+          <span class="cta-btn__inner">SEND MESSAGE</span>
+          <span class="cta-btn__shine"></span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ░░ BOOK CTA ░░ -->
+<section class="section book-cta" id="booking">
+  <div class="book-cta__bg">BOOK</div>
+  <div class="book-cta__inner">
+    <span class="section__label">READY WHEN YOU ARE</span>
+    <h2 class="book-cta__title">LET'S CREATE<br/><em>SOMETHING</em><br/>UNFORGETTABLE</h2>
+    <a class="cta-btn" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">
+      <span class="cta-btn__inner">BOOK NOW ON PIXIESET</span>
+      <span class="cta-btn__shine"></span>
+    </a>
+    <p class="book-cta__or">or call / WhatsApp directly</p>
+    <a class="book-cta__phone" href="tel:+12249000540">+1 224 900 0540</a>
+  </div>
+</section>
+
+{% endblock %}

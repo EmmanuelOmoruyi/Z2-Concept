@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Gallery | Z2 Concept{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="page-hero__inner">
+    <span class="section__label">OUR WORK</span>
+    <h1 class="page-hero__title">GALLERY</h1>
+  </div>
+</section>
+
+<section class="section">
+  {% set slots = [photos|length, 6]|max %}
+  <div class="photo-carousel" id="pcGallery">
+    <div class="photo-carousel__track" id="pctGallery">
+      {% for i in range(slots) %}
+        {% if photos and i < photos|length %}
+        <div class="photo-carousel__slide" onclick="openLightbox('{{ photos[i]['filename'] }}','{{ photos[i]['caption'] or '' }}')">
+          <img src="{{ photos[i]['filename'] }}" alt="{{ photos[i]['caption'] or 'Z2 Concept' }}" loading="lazy" />
+          {% if photos[i]['caption'] %}<div class="photo-carousel__label"><span>{{ photos[i]['caption'] }}</span></div>{% endif %}
+        </div>
+        {% else %}
+        <div class="photo-carousel__slide photo-carousel__slide--placeholder">
+          <div class="placeholder-inner">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>PHOTO {{ i + 1 }}</span>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctGallery">&#8592;</button>
+    <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctGallery">&#8594;</button>
+    <div class="photo-carousel__dots" id="pcdGallery"></div>
+  </div>
+
+  <div class="gallery-footer">
+    <a class="fb-btn" href="https://www.facebook.com/profile.php?id=100064879260169&sk=photos_albums" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+      VIEW MORE IMAGES ON FACEBOOK
+    </a>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox__close" onclick="closeLightbox()">&#10005;</button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="" />
+  <p class="lightbox__cap" id="lightboxCap"></p>
+</div>
+
+{% endblock %}

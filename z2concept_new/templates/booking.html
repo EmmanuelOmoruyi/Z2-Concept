@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Book a Session | Z2 Concept{% endblock %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="page-hero__inner">
+    <span class="section__label">READY WHEN YOU ARE</span>
+    <h1 class="page-hero__title">BOOK A<br/><em>SESSION</em></h1>
+  </div>
+</section>
+
+<section class="section booking-page">
+  <div class="booking-info">
+
+    <div class="booking-info__intro">
+      <h2 class="booking-info__title">WHAT YOU GET<br/><em>WHEN YOU BOOK US</em></h2>
+      <p class="booking-info__sub">From the first frame to the final edit, we handle everything. Here is what every session includes:</p>
+    </div>
+
+    <div class="booking-info__grid">
+
+      <div class="booking-info__card">
+        <div class="booking-info__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <h3>PROFESSIONAL PHOTOGRAPHY</h3>
+        <p>High-resolution images shot with professional-grade cameras. Every shot is composed with intention — no generic angles, no lazy frames.</p>
+      </div>
+
+      <div class="booking-info__card">
+        <div class="booking-info__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+        </div>
+        <h3>VIDEO PRODUCTION</h3>
+        <p>Cinematic video coverage of your event from highlight reels to full-length productions. Edited and delivered to a standard that speaks for itself.</p>
+      </div>
+
+      <div class="booking-info__card">
+        <div class="booking-info__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>FAST TURNAROUND</h3>
+        <p>We know you want your content fast. We deliver edited photos and videos promptly so you can share your moments without the long wait.</p>
+      </div>
+
+      <div class="booking-info__card">
+        <div class="booking-info__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>PERSONALISED APPROACH</h3>
+        <p>No two events are the same. We take time to understand your vision and tailor the shoot to match your story, your style, and your people.</p>
+      </div>
+
+      <div class="booking-info__card">
+        <div class="booking-info__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>CREATIVE DIRECTION</h3>
+        <p>Z2 Concepts brings creative edge to every project, shaping ideas, directing content, and making sure the final result looks exactly how it should.</p>
+      </div>
+
+      <div class="booking-info__card">
+        <div class="booking-info__icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>DESIGN SERVICES</h3>
+        <p>Beyond the lens we also handle flyer design, logo creation, and website builds. One team for your entire visual identity.</p>
+      </div>
+
+    </div>
+
+    <div class="booking-info__services">
+      <h3 class="booking-info__services-title">WE COVER</h3>
+      <div class="booking-info__tags">
+        {% for s in ['Events','Weddings','Birthdays','Funerals','Real Estate','Baby Showers','Graduations','Fashion','Corporate','Branded Media'] %}
+        <span class="booking-tag">{{ s }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="booking-info__cta">
+      <p class="booking-info__cta-text">Ready to lock in your session? Book directly through our booking system.</p>
+      <a class="cta-btn" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">
+        <span class="cta-btn__inner">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+          BOOK NOW ON PIXIESET
+        </span>
+        <span class="cta-btn__shine"></span>
+      </a>
+      <p class="booking-info__or">or call / WhatsApp us directly</p>
+      <a class="booking-info__phone" href="tel:+12249000540">+1 224 900 0540</a>
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
