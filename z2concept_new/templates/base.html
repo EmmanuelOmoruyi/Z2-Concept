@@ -27,11 +27,12 @@
 
     <div class="nav__menu" id="navMenu">
       <div class="nav__links">
-        <a class="nav__item {% if active=='home' %}active{% endif %}" href="/">HOME</a>
-        <a class="nav__item {% if active=='gallery' %}active{% endif %}" href="/gallery">GALLERY</a>
-        <a class="nav__item {% if active=='booking' %}active{% endif %}" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">BOOKING</a>
-        <a class="nav__item {% if active=='about' %}active{% endif %}" href="/about">ABOUT</a>
-        <a class="nav__item {% if active=='contact' %}active{% endif %}" href="/contact">CONTACT</a>
+        <a class="nav__item" href="/#home">HOME</a>
+        <a class="nav__item" href="/#videos">VIDEOS</a>
+        <a class="nav__item" href="/#gallery">GALLERY</a>
+        <a class="nav__item" href="/#services">SERVICES</a>
+        <a class="nav__item" href="/#findus">FIND US</a>
+        <a class="nav__item" href="/#about">ABOUT</a>
       </div>
       <div class="nav__auth">
         {% if current_user %}
@@ -81,4 +82,3 @@
   {% block scripts %}{% endblock %}
 </body>
 </html>
-
