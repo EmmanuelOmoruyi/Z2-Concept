@@ -78,15 +78,6 @@
         </div>
       </div>
     </div>
-     <div class="carousel__slide">
-        <div class="video-card">
-          <div class="video-card__frame">
-            <iframe src="https://www.youtube.com/embed/DxhSHs2Pa3w" title="Z2 Concept Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
-          <p class="video-card__label">YouTube - Wedding Film</p>
-        </div>
-      </div>
-    </div>
     <button class="carousel__btn carousel__btn--prev" data-target="videoTrack">&#8592;</button>
     <button class="carousel__btn carousel__btn--next" data-target="videoTrack">&#8594;</button>
     <div class="carousel__dots" id="videoDots"></div>
@@ -103,8 +94,7 @@
     <button class="gallery-tab active" data-cat="all">ALL</button>
     <button class="gallery-tab" data-cat="weddings">WEDDINGS</button>
     <button class="gallery-tab" data-cat="birthdays">BIRTHDAYS</button>
-    <button class="gallery-tab" data-cat="headshots">HEADSHOTS</button>
-    <button class="gallery-tab" data-cat="graduations">GRADUATIONS</button>
+
   </div>
   <div class="photo-carousel" id="pcHome">
     <div class="photo-carousel__track" id="pctHome">
@@ -120,12 +110,7 @@
       <div class="photo-carousel__slide photo-carousel__slide--placeholder" data-cat="birthdays">
         <div class="placeholder-inner"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>BIRTHDAYS</span></div>
       </div>
-      <div class="photo-carousel__slide photo-carousel__slide--placeholder" data-cat="headshots">
-        <div class="placeholder-inner"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>HEADSHOTS</span></div>
-      </div>
-      <div class="photo-carousel__slide photo-carousel__slide--placeholder" data-cat="graduations">
-        <div class="placeholder-inner"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>GRADUATIONS</span></div>
-      </div>
+
     </div>
     <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctHome">&#8592;</button>
     <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctHome">&#8594;</button>
@@ -234,7 +219,7 @@
     </div>
     <div class="about-section__right">
       <div class="about-client-img">
-        <div class="https://res.cloudinary.com/dekw9tcyl/image/upload/WhatsAppImage2024-06-19at13.48.53_sgyalb">
+        <div class="about-client-img__placeholder">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span>ADD CLIENT PHOTO</span>
         </div>
@@ -243,18 +228,38 @@
   </div>
 </section>
 
-<!-- BOOK CTA -->
-<section class="section book-cta" id="booking">
-  <div class="book-cta__bg">BOOK</div>
-  <div class="book-cta__inner">
-    <span class="section__label">READY WHEN YOU ARE</span>
-    <h2 class="book-cta__title">LET'S CREATE<br/><em>SOMETHING</em><br/>UNFORGETTABLE</h2>
-    <a class="cta-btn" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">
-      <span class="cta-btn__inner">BOOK NOW ON PIXIESET</span>
-      <span class="cta-btn__shine"></span>
-    </a>
-    <p class="book-cta__or">or call / WhatsApp directly</p>
-    <a class="book-cta__phone" href="tel:+12249000540">+1 224 900 0540</a>
+<!-- CONTACT INFO FOOTER -->
+<section class="section contact-footer" id="contact">
+  <div class="contact-footer__inner">
+    <div class="contact-footer__brand">
+      <span class="nav__logo-z" style="font-size:2.5rem;">Z2</span>
+      <span class="nav__logo-concept" style="font-size:1rem;">CONCEPT</span>
+    </div>
+    <div class="contact-footer__info">
+      <a class="contact-footer__item" href="tel:+12249000540">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+        +1 224 900 0540
+      </a>
+      <a class="contact-footer__item" href="mailto:kefeetxtu@gmail.com">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        kefeetxtu@gmail.com
+      </a>
+      <a class="contact-footer__item" href="https://wa.me/12249000540" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.528 5.837L0 24l6.335-1.652A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.653-.51-5.17-1.4l-.371-.22-3.763.98.999-3.671-.243-.386A9.936 9.936 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        WhatsApp Us
+      </a>
+      <a class="contact-footer__item" href="https://www.facebook.com/profile.php?id=100064879260169" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        Kefee Home Productions
+      </a>
+    </div>
+    <div class="contact-footer__address">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div>
+        <p>27 Abhainn Glas, Edgeworthstown</p>
+        <p>Longford, N39 TV09, Ireland</p>
+      </div>
+    </div>
   </div>
 </section>
 
