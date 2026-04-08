@@ -175,11 +175,41 @@ def inject_user():
 
 # Hardcoded Cloudinary photos — update public IDs here anytime
 CLOUDINARY_PHOTOS = [
-    {"id": "485148855_1106713074834658_1007018805585680720_n_yjeeyc", "caption": "Wedding"},
-    {"id": "656251185_1413698020802827_5479065206795647904_n_oqp6wo", "caption": "Event"},
-    {"id": "654800285_1413697914136171_6470243813399565788_n_gh6di4", "caption": "Event"},
-    {"id": "486315584_1106713061501326_5011477938717597358_n_yo5wqo", "caption": "Wedding"},
-    {"id": "655508905_1413697944136168_7858579123878504310_n_of0kha", "caption": "Event"},
+    # WEDDINGS
+    {"id": "WeddingDSC01008-2Photos_srgbzg", "caption": "weddings"},
+    {"id": "WeddingDSC01016-1Photos_hxlopa", "caption": "weddings"},
+    {"id": "WeddingDSC01049-1Photos_adnvwu", "caption": "weddings"},
+    {"id": "WeddingDSC00924-2Photos_xwtwst", "caption": "weddings"},
+    {"id": "Wedding2_o6jkqm", "caption": "weddings"},
+    {"id": "WeddingDSC00847Photos_mvpptq", "caption": "weddings"},
+    {"id": "WeddingDSC00881-1Photos_usrbcs", "caption": "weddings"},
+    {"id": "Wedding_ewwodp", "caption": "weddings"},
+    {"id": "WeddingDSC00851Photos_r0xqiz", "caption": "weddings"},
+    {"id": "WeddingDSC00879-1Photos_ceu3", "caption": "weddings"},
+    {"id": "WeddingDSC00975-1Photos_q2lqrn", "caption": "weddings"},
+    {"id": "WeddingP_R-Standesamt-069_1_gv4kdd", "caption": "weddings"},
+    {"id": "WeddingP_R-Standesamt-086_1_qfrkgj", "caption": "weddings"},
+    {"id": "WeddingP_R-Standesamt-060_qkf5l9", "caption": "weddings"},
+    {"id": "WeddingP_R-Standesamt-071_ib03wm", "caption": "weddings"},
+    {"id": "WeddingP_R-Standesamt-064_zghn37", "caption": "weddings"},
+    # BIRTHDAYS
+    {"id": "Birthdaysimage00018_mcue67", "caption": "birthdays"},
+    {"id": "BirthdaysDSC00067a_hj6x3j", "caption": "birthdays"},
+    {"id": "Birthdaysimage00014_qymeso", "caption": "birthdays"},
+    {"id": "Birthdaysimage00017_rhu6ng", "caption": "birthdays"},
+    {"id": "BirthdaysDSC00026a_ckmow5", "caption": "birthdays"},
+    {"id": "Birthdaysimage00011_ptg6vt", "caption": "birthdays"},
+    {"id": "Birthdaysimage00001_ewmkkc", "caption": "birthdays"},
+    {"id": "BirthdaysDSC00070_ddhfps", "caption": "birthdays"},
+    {"id": "BirthdaysDSC00061_axeybv", "caption": "birthdays"},
+    {"id": "BirthdaysDSC00048_cizthq", "caption": "birthdays"},
+    {"id": "Birthdaysimage00010_muq0xn", "caption": "birthdays"},
+    {"id": "Birthdaysimage00008_ajbuft", "caption": "birthdays"},
+    {"id": "Birthdaysimage00007_tjyrpm", "caption": "birthdays"},
+    {"id": "BirthdaysDSC00054_gydxax", "caption": "birthdays"},
+    {"id": "656251185_1413698020802827_5479065206795647904_n_oqp6wo", "caption": "birthdays"},
+    {"id": "654800285_1413697914136171_6470243813399565788_n_gh6di4", "caption": "birthdays"},
+    {"id": "655508905_1413697944136168_7858579123878504310_n_of0kha", "caption": "birthdays"},
 ]
 
 def get_photos():
