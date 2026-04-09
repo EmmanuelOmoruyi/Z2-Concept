@@ -109,7 +109,7 @@
     <div class="photo-carousel__track" id="pctAll">
       {% for photo in photos %}
       <div class="photo-carousel__slide" onclick="openLightbox('{{ photo['filename'] }}','{{ photo['caption'] or '' }}')">
-        <img src="{{ photo['filename'] }}" alt="{{ photo['caption'] or 'Z2 Concept' }}" loading="lazy" />
+        <img src="{{ photo['filename'] }}" alt="{{ photo['caption'] or 'Z2 Concept' }}" loading="lazy" onerror="this.closest('.photo-carousel__slide').style.display='none'" />
         {% if photo['caption'] %}<div class="photo-carousel__label"><span>{{ photo['caption'] }}</span></div>{% endif %}
       </div>
       {% endfor %}
@@ -234,7 +234,7 @@
       </div>
     </div>
     <div class="map-embed">
-      <iframe src="https://maps.google.com/maps?q=27+Abhainn+Glas,+Edgeworthstown,+Longford,+N39+TV09,+Ireland&output=embed&z=15" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-7.6200,53.7000,-7.5800,53.7200&layer=mapnik&marker=53.7097,-7.5997" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
     </div>
   </div>
 </section>
