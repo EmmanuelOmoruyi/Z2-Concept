@@ -20,8 +20,8 @@ app.secret_key = os.environ.get("SECRET_KEY", "z2concept-secret-2025")
 DATABASE   = "bookings.db"
 ADMIN_USER = os.environ.get("ADMIN_USER", "admin")
 ADMIN_PASS = os.environ.get("ADMIN_PASS", "z2concept2025")
-GMAIL_USER = os.environ.get("GMAIL_USER", "akoviantechnologies@gmail.com")
-GMAIL_PASS = os.environ.get("GMAIL_PASS", "")
+GMAIL_USER = os.environ.get("GMAIL_USER", "kefeetxtu@gmail.com")
+GMAIL_PASS = os.environ.get("GMAIL_PASS", "mvjrrtdrgbmcjzkz")
 NOTIFY_EMAIL = "kefeetxtu@gmail.com"
 BASE_URL   = os.environ.get("BASE_URL", "http://127.0.0.1:5000")
 
