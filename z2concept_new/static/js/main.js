@@ -167,38 +167,7 @@ initPhotoCarousel('pctAll', 'pcdAll');
 initPhotoCarousel('pctWeddings', 'pcdWeddings');
 initPhotoCarousel('pctBirthdays', 'pcdBirthdays');
 
-// GALLERY CATEGORY TABS — switch between separate carousels
-(function() {
-  const tabs = document.querySelectorAll('.gallery-tab');
-  if (!tabs.length) return;
 
-  const carouselMap = {
-    'all':       document.getElementById('pcAll'),
-    'weddings':  document.getElementById('pcWeddings'),
-    'birthdays': document.getElementById('pcBirthdays'),
-  };
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      const cat = tab.dataset.cat;
-
-      Object.entries(carouselMap).forEach(([key, el]) => {
-        if (!el) return;
-        if (key === cat) {
-          el.style.display = 'block';
-          // Re-init to recalc widths after display change
-          const trackId = 'pct' + key.charAt(0).toUpperCase() + key.slice(1);
-          const dotsId  = 'pcd' + key.charAt(0).toUpperCase() + key.slice(1);
-          initPhotoCarousel(trackId, dotsId);
-        } else {
-          el.style.display = 'none';
-        }
-      });
-    });
-  });
-})();
 
 // LIGHTBOX
 function openLightbox(filename, caption) {
@@ -266,3 +235,74 @@ document.querySelectorAll('.gallery-section, .about-section, .services-section, 
   el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
   observer.observe(el);
 });
+
+
+// COLLECTION PHOTOS DATA (injected from Cloudinary)
+const COLLECTION_DATA = {
+  weddings: {
+    title: 'WEDDINGS',
+    photos: [
+      'WeddingDSC01008-2Photos_srgbzg','WeddingDSC01016-1Photos_hxlopa','WeddingDSC01049-1Photos_adnvwu',
+      'WeddingDSC00924-2Photos_xwtwst','Wedding2_o6jkqm','WeddingDSC00847Photos_mvpptq',
+      'WeddingDSC00881-1Photos_usrbcs','Wedding_ewwodp','WeddingDSC00851Photos_r0xqiz',
+      'WeddingDSC00879-1Photos_ceu3','WeddingDSC00975-1Photos_q2lqrn',
+      'WeddingP_R-Standesamt-069_1_gv4kdd','WeddingP_R-Standesamt-086_1_qfrkgj',
+      'WeddingP_R-Standesamt-060_qkf5l9','WeddingP_R-Standesamt-071_ib03wm','WeddingP_R-Standesamt-064_zghn37'
+    ]
+  },
+  birthdays: {
+    title: 'BIRTHDAYS',
+    photos: [
+      'Birthdaysimage00018_mcue67','BirthdaysDSC00067a_hj6x3j','Birthdaysimage00014_qymeso',
+      'Birthdaysimage00017_rhu6ng','BirthdaysDSC00026a_ckmow5','Birthdaysimage00011_ptg6vt',
+      'Birthdaysimage00001_ewmkkc','BirthdaysDSC00070_ddhfps','BirthdaysDSC00061_axeybv',
+      'BirthdaysDSC00048_cizthq','Birthdaysimage00010_muq0xn','Birthdaysimage00008_ajbuft',
+      'Birthdaysimage00007_tjyrpm','BirthdaysDSC00054_gydxax',
+      '656251185_1413698020802827_5479065206795647904_n_oqp6wo',
+      '654800285_1413697914136171_6470243813399565788_n_gh6di4',
+      '655508905_1413697944136168_7858579123878504310_n_of0kha'
+    ]
+  },
+  modeling: {
+    title: 'MODELING',
+    photos: ['KefeeHP2_56_mimhlu']
+  }
+};
+
+const CLOUD = 'dekw9tcyl';
+
+function openCollection(cat) {
+  const data = COLLECTION_DATA[cat];
+  if (!data) return;
+
+  const modal = document.getElementById('collectionModal');
+  const backdrop = document.getElementById('collectionBackdrop');
+  const title = document.getElementById('collectionTitle');
+  const track = document.getElementById('collectionTrack');
+
+  title.textContent = data.title;
+  track.innerHTML = '';
+
+  data.photos.forEach(id => {
+    const div = document.createElement('div');
+    div.className = 'cm-slide';
+    const img = document.createElement('img');
+    img.src = `https://res.cloudinary.com/${CLOUD}/image/upload/${id}`;
+    img.alt = data.title;
+    img.loading = 'lazy';
+    img.onerror = () => { div.style.display = 'none'; };
+    img.onclick = () => openLightbox(img.src, data.title);
+    div.appendChild(img);
+    track.appendChild(div);
+  });
+
+  modal.classList.add('open');
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCollection() {
+  document.getElementById('collectionModal')?.classList.remove('open');
+  document.getElementById('collectionBackdrop')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
