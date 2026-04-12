@@ -1,9 +1,157 @@
 {% extends "base.html" %}
-{% block title %}Z2 Concept | Kefee Home Productions - Video & Photography{% endblock %}
+{% block title %}Z2 Concept | Kefee Home Productions - Video & Photography<style id="additions">
+/* -- HERO BACKGROUND IMAGE -- */
+.hero {
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.72);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero__left, .hero__right {
+  position: relative;
+  z-index: 2;
+}
+
+/* -- COLLECTION GRID -- */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.collection-card {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(232,119,34,0.15);
+}
+.collection-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.collection-card:hover img { transform: scale(1.06); }
+.collection-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.2) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 28px 20px;
+  transition: background 0.3s;
+}
+.collection-card:hover .collection-card__overlay {
+  background: linear-gradient(to top, rgba(232,119,34,0.7) 0%, rgba(10,10,10,0.3) 60%, transparent 100%);
+}
+.collection-card__label {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  color: var(--white);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.collection-card__count {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(245,245,240,0.6);
+}
+
+/* -- COLLECTION MODAL -- */
+.collection-modal__backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 800;
+}
+.collection-modal__backdrop.open { display: block; }
+.collection-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 92vw;
+  max-width: 1200px;
+  max-height: 90vh;
+  background: var(--black-2);
+  border: 1px solid rgba(232,119,34,0.2);
+  z-index: 900;
+  padding: 28px;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 20px;
+}
+.collection-modal.open { display: flex; }
+.collection-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.collection-modal__title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.collection-modal__close {
+  background: none; border: none;
+  color: var(--white); font-size: 1.4rem;
+  cursor: pointer; opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.collection-modal__close:hover { opacity: 1; }
+.collection-modal__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  overflow-y: auto;
+  max-height: calc(90vh - 120px);
+}
+.collection-modal__track .cm-slide {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(232,119,34,0.1);
+}
+.collection-modal__track .cm-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+.collection-modal__track .cm-slide:hover img { transform: scale(1.05); }
+
+@media (max-width: 900px) {
+  .collection-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .collection-modal__track { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .collection-grid { grid-template-columns: 1fr; gap: 12px; }
+  .collection-card { aspect-ratio: 16/9; }
+  .collection-modal { padding: 16px; }
+  .collection-modal__track { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+{% endblock %}
 {% block content %}
 
 <!-- HERO -->
-<section class="hero" id="home">
+<section class="hero" id="home" style="background-image: url('https://res.cloudinary.com/dekw9tcyl/image/upload/WeddingP_R-Standesamt-064_zghn37'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <div class="hero__left">
     <p class="hero__eyebrow">YOUR FEATURE IS TODAY</p>
     <h1 class="hero__title">BOOK A<br/><em>VIDEO / PHOTO</em><br/>SESSION</h1>
@@ -98,61 +246,47 @@
     <span class="section__label">OUR WORK</span>
     <h2 class="section__title">GALLERY</h2>
   </div>
-  <div class="gallery-tabs" id="galleryTabs">
-    <button class="gallery-tab active" data-cat="all">ALL</button>
-    <button class="gallery-tab" data-cat="weddings">WEDDINGS</button>
-    <button class="gallery-tab" data-cat="birthdays">BIRTHDAYS</button>
-  </div>
 
-  <!-- ALL tab carousel -->
-  <div class="photo-carousel gallery-cat-carousel active-carousel" id="pcAll">
-    <div class="photo-carousel__track" id="pctAll">
-      {% for photo in photos %}
-      <div class="photo-carousel__slide" onclick="openLightbox('{{ photo['filename'] }}','{{ photo['caption'] or '' }}')">
-        <img src="{{ photo['filename'] }}" alt="{{ photo['caption'] or 'Z2 Concept' }}" loading="lazy" onerror="this.closest('.photo-carousel__slide').style.display='none'" />
-        {% if photo['caption'] %}<div class="photo-carousel__label"><span>{{ photo['caption'] }}</span></div>{% endif %}
+  <div class="collection-grid">
+
+    <div class="collection-card" onclick="openCollection('weddings')">
+      <img src="https://res.cloudinary.com/dekw9tcyl/image/upload/WeddingP_R-Standesamt-069_nhebgr" alt="Weddings" loading="lazy" onerror="this.src='https://res.cloudinary.com/dekw9tcyl/image/upload/WeddingP_R-Standesamt-069_1_gv4kdd'" />
+      <div class="collection-card__overlay">
+        <span class="collection-card__label">WEDDINGS</span>
+        <span class="collection-card__count">16 PHOTOS</span>
       </div>
-      {% endfor %}
     </div>
-    <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctAll">&#8592;</button>
-    <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctAll">&#8594;</button>
-    <div class="photo-carousel__dots" id="pcdAll"></div>
-  </div>
 
-  <!-- WEDDINGS tab carousel -->
-  <div class="photo-carousel gallery-cat-carousel" id="pcWeddings" style="display:none;">
-    <div class="photo-carousel__track" id="pctWeddings">
-      {% for photo in photos if photo['caption'] == 'weddings' %}
-      <div class="photo-carousel__slide" onclick="openLightbox('{{ photo['filename'] }}','{{ photo['caption'] or '' }}')">
-        <img src="{{ photo['filename'] }}" alt="Wedding" loading="lazy" />
+    <div class="collection-card" onclick="openCollection('birthdays')">
+      <img src="https://res.cloudinary.com/dekw9tcyl/image/upload/BirthdaysDSC00067a_hj6x3j" alt="Birthdays" loading="lazy" />
+      <div class="collection-card__overlay">
+        <span class="collection-card__label">BIRTHDAYS</span>
+        <span class="collection-card__count">17 PHOTOS</span>
       </div>
-      {% endfor %}
     </div>
-    <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctWeddings">&#8592;</button>
-    <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctWeddings">&#8594;</button>
-    <div class="photo-carousel__dots" id="pcdWeddings"></div>
-  </div>
 
-  <!-- BIRTHDAYS tab carousel -->
-  <div class="photo-carousel gallery-cat-carousel" id="pcBirthdays" style="display:none;">
-    <div class="photo-carousel__track" id="pctBirthdays">
-      {% for photo in photos if photo['caption'] == 'birthdays' %}
-      <div class="photo-carousel__slide" onclick="openLightbox('{{ photo['filename'] }}','{{ photo['caption'] or '' }}')">
-        <img src="{{ photo['filename'] }}" alt="Birthday" loading="lazy" />
+    <div class="collection-card" onclick="openCollection('modeling')">
+      <img src="https://res.cloudinary.com/dekw9tcyl/image/upload/KefeeHP2_56_mimhlu" alt="Modeling" loading="lazy" />
+      <div class="collection-card__overlay">
+        <span class="collection-card__label">MODELING</span>
+        <span class="collection-card__count">COMING SOON</span>
       </div>
-      {% endfor %}
     </div>
-    <button class="photo-carousel__btn photo-carousel__btn--prev" data-track="pctBirthdays">&#8592;</button>
-    <button class="photo-carousel__btn photo-carousel__btn--next" data-track="pctBirthdays">&#8594;</button>
-    <div class="photo-carousel__dots" id="pcdBirthdays"></div>
+
   </div>
 
-  <div class="gallery-footer">
-    <a class="fb-btn" href="https://www.facebook.com/profile.php?id=100064879260169&sk=photos_albums" target="_blank" rel="noopener">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-      VIEW MORE IMAGES ON FACEBOOK
-    </a>
+  <!-- Collection Lightbox Modal -->
+  <div class="collection-modal" id="collectionModal">
+    <div class="collection-modal__header">
+      <h3 class="collection-modal__title" id="collectionTitle"></h3>
+      <button class="collection-modal__close" onclick="closeCollection()">&#10005;</button>
+    </div>
+    <div class="collection-modal__track" id="collectionTrack"></div>
+    <button class="photo-carousel__btn photo-carousel__btn--prev" id="colPrev" style="position:static;margin-top:24px;">&#8592;</button>
+    <button class="photo-carousel__btn photo-carousel__btn--next" id="colNext" style="position:static;margin-top:24px;">&#8594;</button>
   </div>
+  <div class="collection-modal__backdrop" id="collectionBackdrop" onclick="closeCollection()"></div>
+
 </section>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -233,16 +367,9 @@
         </a>
       </div>
     </div>
-   <div class="map-embed">
-  <iframe 
-    src="https://www.google.com/maps?q=27+Abhainn+Glas,+Edgeworthstown,+Longford,+Ireland&output=embed"
-    width="100%" 
-    height="100%" 
-    style="border:0;" 
-    allowfullscreen 
-    loading="lazy">
-  </iframe>
-</div>
+    <div class="map-embed">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-7.6200,53.7000,-7.5800,53.7200&layer=mapnik&marker=53.7097,-7.5997" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
   </div>
 </section>
 
@@ -303,4 +430,152 @@
   <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.528 5.837L0 24l6.335-1.652A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.653-.51-5.17-1.4l-.371-.22-3.763.98.999-3.671-.243-.386A9.936 9.936 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
 </a>
 
+<style id="additions">
+/* -- HERO BACKGROUND IMAGE -- */
+.hero {
+  position: relative;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10,10,10,0.72);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero__left, .hero__right {
+  position: relative;
+  z-index: 2;
+}
+
+/* -- COLLECTION GRID -- */
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.collection-card {
+  position: relative;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(232,119,34,0.15);
+}
+.collection-card img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.collection-card:hover img { transform: scale(1.06); }
+.collection-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.2) 60%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 28px 20px;
+  transition: background 0.3s;
+}
+.collection-card:hover .collection-card__overlay {
+  background: linear-gradient(to top, rgba(232,119,34,0.7) 0%, rgba(10,10,10,0.3) 60%, transparent 100%);
+}
+.collection-card__label {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  color: var(--white);
+  letter-spacing: 0.05em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.collection-card__count {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(245,245,240,0.6);
+}
+
+/* -- COLLECTION MODAL -- */
+.collection-modal__backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 800;
+}
+.collection-modal__backdrop.open { display: block; }
+.collection-modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 92vw;
+  max-width: 1200px;
+  max-height: 90vh;
+  background: var(--black-2);
+  border: 1px solid rgba(232,119,34,0.2);
+  z-index: 900;
+  padding: 28px;
+  overflow: hidden;
+  flex-direction: column;
+  gap: 20px;
+}
+.collection-modal.open { display: flex; }
+.collection-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.collection-modal__title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--white);
+  letter-spacing: 0.05em;
+}
+.collection-modal__close {
+  background: none; border: none;
+  color: var(--white); font-size: 1.4rem;
+  cursor: pointer; opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.collection-modal__close:hover { opacity: 1; }
+.collection-modal__track {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  overflow-y: auto;
+  max-height: calc(90vh - 120px);
+}
+.collection-modal__track .cm-slide {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(232,119,34,0.1);
+}
+.collection-modal__track .cm-slide img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s;
+}
+.collection-modal__track .cm-slide:hover img { transform: scale(1.05); }
+
+@media (max-width: 900px) {
+  .collection-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .collection-modal__track { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 600px) {
+  .collection-grid { grid-template-columns: 1fr; gap: 12px; }
+  .collection-card { aspect-ratio: 16/9; }
+  .collection-modal { padding: 16px; }
+  .collection-modal__track { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
 {% endblock %}
