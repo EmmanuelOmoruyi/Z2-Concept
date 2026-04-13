@@ -90,6 +90,13 @@ def init_db():
             caption TEXT,
             created_at TEXT DEFAULT (datetime('now'))
         )""")
+        db.execute("""CREATE TABLE IF NOT EXISTS chat_messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            message TEXT NOT NULL,
+            sender_ip TEXT,
+            created_at TEXT DEFAULT (datetime('now')),
+            is_read INTEGER DEFAULT 0
+        )""")
         db.commit()
 
 def send_email(to_addr, subject, html_body):
@@ -173,7 +180,7 @@ def inject_user():
         user = get_db().execute("SELECT * FROM users WHERE id=?", (session["user_id"],)).fetchone()
     return {"current_user": user}
 
-# Hardcoded Cloudinary photos — update public IDs here anytime
+# Hardcoded Cloudinary photos
 CLOUDINARY_PHOTOS = [
     # WEDDINGS
     {"id": "WeddingDSC01008-2Photos_srgbzg", "caption": "weddings"},
@@ -259,6 +266,18 @@ def contact():
             </div>""")
             success = True
     return render_template("index.html", active="home", photos=get_photos(), success=success, error=error)
+
+# ── CHAT ───────────────────────────────────────────────────────────────────
+@app.route("/chat", methods=["POST"])
+def chat():
+    data = request.get_json()
+    message = (data or {}).get("message", "").strip()
+    if message:
+        db = get_db()
+        db.execute("INSERT INTO chat_messages (message, sender_ip) VALUES (?,?)",
+                   (message, request.remote_addr))
+        db.commit()
+    return jsonify({"reply": "Thanks for your message! We'll get back to you shortly. \U0001f4f8"})
 
 # ── AUTH ───────────────────────────────────────────────────────────────────
 @app.route("/signup", methods=["GET", "POST"])
@@ -415,8 +434,13 @@ def admin_dashboard():
     total = db.execute("SELECT COUNT(*) FROM bookings").fetchone()[0]
     users_total = db.execute("SELECT COUNT(*) FROM users WHERE is_verified=1").fetchone()[0]
     photos = db.execute("SELECT * FROM photos ORDER BY created_at DESC").fetchall()
+    chats = db.execute("SELECT * FROM chat_messages ORDER BY created_at DESC LIMIT 50").fetchall()
+    unread_chats = db.execute("SELECT COUNT(*) FROM chat_messages WHERE is_read=0").fetchone()[0]
+    db.execute("UPDATE chat_messages SET is_read=1 WHERE is_read=0")
+    db.commit()
     return render_template("admin_dashboard.html", bookings=bookings, status_filter=status,
-        search=search, count_map=counts, total=total, users_total=users_total, db_photos=photos)
+        search=search, count_map=counts, total=total, users_total=users_total,
+        db_photos=photos, chats=chats, unread_chats=unread_chats)
 
 @app.route("/admin/booking/<int:bid>/status", methods=["POST"])
 @admin_required
