@@ -265,44 +265,121 @@ const COLLECTION_DATA = {
   },
   modeling: {
     title: 'MODELING',
-    photos: ['KefeeHP2_56_mimhlu']
+    photos: [
+      'KefeeHP2_54_p6ky8h','KefeeHP2_47_mlj8z3','KefeeHP2_43_pjtnjk','KefeeHP2_42_ssawxm',
+      'KefeeHP2_46_mec2hf','KefeeHP2_49_lzuwel','KefeeHP2_52_szggos','KefeeHP2_51_jcsh6s',
+      'KefeeHP_22_j5vh4j','KefeeHP_21_izrsgt','KefeeHP2_2_ns1wyr','KefeeHP_23_nyjz05',
+      'KefeeHP2_5_wycfvk','KefeeHP2_4_yvgaov','KefeeHP2_3_q0a4jd','KefeeHP2_22_a1wors',
+      'KefeeHP2_13_obu9tl','KefeeHP2_20_lik7ac','KefeeHP2_30_xz1ie8','KefeeHP2_24_xhgtin',
+      'KefeeHP2_29_nyehqp','KefeeHP2_34_eningj','KefeeHP2_28_qxgwdy','KefeeHP2_32_gbrxxp'
+    ]
   }
 };
 
 const CLOUD = 'dekw9tcyl';
 
+let colPhotos = [];
+let colIndex = 0;
+
 function openCollection(cat) {
   const data = COLLECTION_DATA[cat];
   if (!data) return;
+  colPhotos = data.photos.map(id => `https://res.cloudinary.com/${CLOUD}/image/upload/${id}`);
+  colIndex = 0;
 
   const modal = document.getElementById('collectionModal');
   const backdrop = document.getElementById('collectionBackdrop');
-  const title = document.getElementById('collectionTitle');
-  const track = document.getElementById('collectionTrack');
+  document.getElementById('collectionTitle').textContent = data.title;
 
-  title.textContent = data.title;
-  track.innerHTML = '';
-
-  data.photos.forEach(id => {
-    const div = document.createElement('div');
-    div.className = 'cm-slide';
+  // Build thumbnail strip
+  const strip = document.getElementById('collectionStrip');
+  strip.innerHTML = '';
+  colPhotos.forEach((src, i) => {
     const img = document.createElement('img');
-    img.src = `https://res.cloudinary.com/${CLOUD}/image/upload/${id}`;
-    img.alt = data.title;
+    img.src = src;
     img.loading = 'lazy';
-    img.onerror = () => { div.style.display = 'none'; };
-    img.onclick = () => openLightbox(img.src, data.title);
-    div.appendChild(img);
-    track.appendChild(div);
+    img.onerror = () => { img.parentElement && (img.parentElement.style.display='none'); };
+    img.onclick = () => showColPhoto(i);
+    img.className = i === 0 ? 'active' : '';
+    strip.appendChild(img);
   });
 
+  showColPhoto(0);
   modal.classList.add('open');
   backdrop.classList.add('open');
   document.body.style.overflow = 'hidden';
+}
+
+function showColPhoto(idx) {
+  colIndex = (idx + colPhotos.length) % colPhotos.length;
+  const main = document.getElementById('collectionMainImg');
+  main.src = colPhotos[colIndex];
+  main.onerror = () => { showColPhoto(colIndex + 1); };
+  // Update strip active state
+  document.querySelectorAll('#collectionStrip img').forEach((img, i) => {
+    img.classList.toggle('active', i === colIndex);
+    if (i === colIndex) img.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  });
 }
 
 function closeCollection() {
   document.getElementById('collectionModal')?.classList.remove('open');
   document.getElementById('collectionBackdrop')?.classList.remove('open');
   document.body.style.overflow = '';
+}
+
+// Arrow key nav for collection
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('collectionModal')?.classList.contains('open')) return;
+  if (e.key === 'ArrowRight') showColPhoto(colIndex + 1);
+  if (e.key === 'ArrowLeft') showColPhoto(colIndex - 1);
+  if (e.key === 'Escape') closeCollection();
+});
+
+// -- CHAT WIDGET --
+function toggleChat() {
+  const box = document.getElementById('chatBox');
+  box.classList.toggle('open');
+  if (box.classList.contains('open')) {
+    document.getElementById('chatInput').focus();
+  }
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+
+  // Show user message
+  const messages = document.getElementById('chatMessages');
+  const userDiv = document.createElement('div');
+  userDiv.className = 'chat-box__msg chat-box__msg--out';
+  userDiv.innerHTML = `<p>${msg}</p>`;
+  messages.appendChild(userDiv);
+  input.value = '';
+  messages.scrollTop = messages.scrollHeight;
+
+  // Show sending indicator
+  const sending = document.createElement('div');
+  sending.className = 'chat-box__sending';
+  sending.textContent = 'Sending...';
+  messages.appendChild(sending);
+
+  try {
+    const res = await fetch('/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: msg })
+    });
+    const data = await res.json();
+    sending.remove();
+    const replyDiv = document.createElement('div');
+    replyDiv.className = 'chat-box__msg chat-box__msg--in';
+    replyDiv.innerHTML = `<p>${data.reply || "Thanks for reaching out! We'll get back to you soon."}</p>`;
+    messages.appendChild(replyDiv);
+  } catch {
+    sending.textContent = "Message sent!";
+    setTimeout(() => sending.remove(), 2000);
+  }
+  messages.scrollTop = messages.scrollHeight;
 }
