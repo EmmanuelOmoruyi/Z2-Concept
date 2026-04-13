@@ -1,5 +1,34 @@
 {% extends "base.html" %}
-{% block title %}Z2 Concept | Kefee Home Productions - Video & Photography<style id="additions">
+{% block title %}Z2 Concept | Kefee Home Productions - Video & Photography
+<!-- CHAT WIDGET -->
+<div class="chat-bubble" id="chatBubble" onclick="toggleChat()">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</div>
+
+<div class="chat-box" id="chatBox">
+  <div class="chat-box__header">
+    <div class="chat-box__info">
+      <div class="chat-box__avatar">Z2</div>
+      <div>
+        <p class="chat-box__name">Z2 Concept</p>
+        <p class="chat-box__status">We reply fast</p>
+      </div>
+    </div>
+    <button class="chat-box__close" onclick="toggleChat()">&#10005;</button>
+  </div>
+  <div class="chat-box__messages" id="chatMessages">
+    <div class="chat-box__msg chat-box__msg--in">
+      <p>Hi! 👋 Welcome to Z2 Concept. How can we help you today?</p>
+    </div>
+  </div>
+  <div class="chat-box__footer">
+    <input class="chat-box__input" id="chatInput" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendChat()" />
+    <button class="chat-box__send" onclick="sendChat()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+<style id="additions">
 /* -- HERO BACKGROUND IMAGE -- */
 .hero {
   position: relative;
@@ -159,11 +188,12 @@
   </div>
   <div class="hero__right">
     <div class="hero__slider" id="heroSlider">
-      {% for photo in photos %}
-      <div class="hero__slide {% if loop.first %}active{% endif %}">
-        <img src="{{ photo['filename'] }}" alt="{{ photo['caption'] or 'Z2 Concept' }}" />
-      </div>
-      {% endfor %}
+      <div class="hero__slide active"><img src="https://res.cloudinary.com/dekw9tcyl/image/upload/WeddingP_R-Standesamt-060_qkf5l9" alt="Z2 Concept" /></div>
+      <div class="hero__slide"><img src="https://res.cloudinary.com/dekw9tcyl/image/upload/WeddingDSC00881-1Photos_usrbcs" alt="Z2 Concept" /></div>
+      <div class="hero__slide"><img src="https://res.cloudinary.com/dekw9tcyl/image/upload/DSC00879-1_1_wgdk0h" alt="Z2 Concept" /></div>
+      <div class="hero__slide"><img src="https://res.cloudinary.com/dekw9tcyl/image/upload/DSC01062-2_1_fihzzl" alt="Z2 Concept" /></div>
+      <div class="hero__slide"><img src="https://res.cloudinary.com/dekw9tcyl/image/upload/WeddingP_R-Standesamt-069_1_gv4kdd" alt="Z2 Concept" /></div>
+      <div class="hero__slide"><img src="https://res.cloudinary.com/dekw9tcyl/image/upload/485410247_1106713314834634_1020997389437896831_n_lws3b1" alt="Z2 Concept" /></div>
       <div class="hero__slider-dots" id="heroSliderDots"></div>
     </div>
     <a class="hero__book-btn" href="https://kefeehptech.pixieset.com/booking/" target="_blank" rel="noopener">
@@ -174,7 +204,7 @@
 </section>
 
 <!-- TICKER -->
-<section class="ticker">
+<section class="ticker ticker--white">
   <div class="ticker__track">
     <span>EVENTS</span><span class="dot">&#10022;</span>
     <span>WEDDINGS</span><span class="dot">&#10022;</span>
@@ -275,15 +305,18 @@
 
   </div>
 
-  <!-- Collection Lightbox Modal -->
+  <!-- Collection Slideshow Modal -->
   <div class="collection-modal" id="collectionModal">
-    <div class="collection-modal__header">
-      <h3 class="collection-modal__title" id="collectionTitle"></h3>
-      <button class="collection-modal__close" onclick="closeCollection()">&#10005;</button>
+    <div class="col-modal__topbar">
+      <h3 class="col-modal__title" id="collectionTitle"></h3>
+      <button class="col-modal__close" onclick="closeCollection()">&#10005;</button>
     </div>
-    <div class="collection-modal__track" id="collectionTrack"></div>
-    <button class="photo-carousel__btn photo-carousel__btn--prev" id="colPrev" style="position:static;margin-top:24px;">&#8592;</button>
-    <button class="photo-carousel__btn photo-carousel__btn--next" id="colNext" style="position:static;margin-top:24px;">&#8594;</button>
+    <div class="col-modal__main">
+      <button class="col-modal__arrow col-modal__arrow--left" onclick="showColPhoto(colIndex-1)">&#8592;</button>
+      <img class="col-modal__mainimg" id="collectionMainImg" src="" alt="" />
+      <button class="col-modal__arrow col-modal__arrow--right" onclick="showColPhoto(colIndex+1)">&#8594;</button>
+    </div>
+    <div class="col-modal__strip" id="collectionStrip"></div>
   </div>
   <div class="collection-modal__backdrop" id="collectionBackdrop" onclick="closeCollection()"></div>
 
@@ -425,11 +458,37 @@
   </div>
 </section>
 
-<!-- WHATSAPP FLOAT -->
-<a class="whatsapp-float" href="https://wa.me/12249000540" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.112 1.528 5.837L0 24l6.335-1.652A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.653-.51-5.17-1.4l-.371-.22-3.763.98.999-3.671-.243-.386A9.936 9.936 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-</a>
 
+
+
+<!-- CHAT WIDGET -->
+<div class="chat-bubble" id="chatBubble" onclick="toggleChat()">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</div>
+
+<div class="chat-box" id="chatBox">
+  <div class="chat-box__header">
+    <div class="chat-box__info">
+      <div class="chat-box__avatar">Z2</div>
+      <div>
+        <p class="chat-box__name">Z2 Concept</p>
+        <p class="chat-box__status">We reply fast</p>
+      </div>
+    </div>
+    <button class="chat-box__close" onclick="toggleChat()">&#10005;</button>
+  </div>
+  <div class="chat-box__messages" id="chatMessages">
+    <div class="chat-box__msg chat-box__msg--in">
+      <p>Hi! 👋 Welcome to Z2 Concept. How can we help you today?</p>
+    </div>
+  </div>
+  <div class="chat-box__footer">
+    <input class="chat-box__input" id="chatInput" type="text" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendChat()" />
+    <button class="chat-box__send" onclick="sendChat()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
 <style id="additions">
 /* -- HERO BACKGROUND IMAGE -- */
 .hero {
